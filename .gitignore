@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.knowledge/
+.claude/
+*.tgz
+.env
+.env.*
+*.log
+.DS_Store
+coverage/

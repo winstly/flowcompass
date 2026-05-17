@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "base_salaries": {
+    "突击兵": { "junior": 8000, "mid": 12000, "senior": 18000 },
+    "狙击手": { "junior": 9000, "mid": 14000, "senior": 20000 },
+    "工兵": { "junior": 8500, "mid": 13000, "senior": 19000 },
+    "卫生兵": { "junior": 8000, "mid": 12000, "senior": 18000 },
+    "侦察兵": { "junior": 7500, "mid": 11000, "senior": 16000 }
+  },
+  "adjustment_factors": {
+    "performance_bonus": 0.15,
+    "specialization_bonus": 0.10,
+    "leadership_bonus": 0.20
+  }
+}
