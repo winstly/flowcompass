@@ -1,0 +1,16 @@
+investigation:
+  agents: [product-manager, software-architect]
+requirements:
+  agents: [product-manager]
+architecture:
+  agents: [software-architect, backend-architect, security-engineer]
+design:
+  agents: [frontend-developer, backend-architect, technical-writer]
+development:
+  agents: [senior-developer, frontend-developer, devops-automator]
+testing:
+  agents: [api-tester, accessibility-auditor, performance-benchmarker, code-reviewer]
+deployment:
+  agents: [devops-automator, sre, infrastructure-maintainer]
+retrospective:
+  agents: [product-manager, project-shepherd, compliance-auditor]

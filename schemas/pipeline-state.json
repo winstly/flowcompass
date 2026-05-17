@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PipelineState",
+  "type": "object",
+  "required": ["active", "current_command", "tool", "mode", "stages", "context"],
+  "properties": {
+    "active": {
+      "type": "boolean",
+      "description": "流水线是否激活"
+    },
+    "current_command": {
+      "type": ["string", "null"],
+      "description": "当前执行的阶段名称"
+    },
+    "tool": {
+      "type": "string",
+      "enum": ["claude", "opencode", "cursor", "windsurf", "cline"],
+      "description": "目标 AI 工具"
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["cli", "file-driven"],
+      "description": "执行模式"
+    },
+    "context": {
+      "type": "object",
+      "required": ["level", "completed_skills", "iteration"],
+      "properties": {
+        "level": { "type": "string" },
+        "completed_skills": { "type": "array", "items": { "type": "string" } },
+        "last_artifact_path": { "type": "string" },
+        "iteration": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "stages": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["status", "current_skill_index", "skills"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["pending", "in_progress", "completed", "failed"]
+          },
+          "started_at": { "type": "string", "format": "date-time" },
+          "completed_at": { "type": "string", "format": "date-time" },
+          "current_skill_index": { "type": "integer", "minimum": -1 },
+          "skills": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["skill_name", "status"],
+              "properties": {
+                "skill_name": { "type": "string" },
+                "status": {
+                  "type": "string",
+                  "enum": ["pending", "in_progress", "completed", "failed"]
+                },
+                "started_at": { "type": "string", "format": "date-time" },
+                "completed_at": { "type": "string", "format": "date-time" },
+                "output_path": { "type": "string" },
+                "output_summary": { "type": "string" },
+                "error_message": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
