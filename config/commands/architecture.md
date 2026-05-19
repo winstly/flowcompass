@@ -15,6 +15,13 @@ wiki-category: architecture
 
 # 架构设计
 
+> **任务隔离（最高优先级）**：如果 `.knowledge/tasks/.current` 存在且非空，设当前任务名为其内容。此阶段所有 Skill 产出物的写入路径必须重定向：
+> - `.knowledge/wiki/summaries/<category>/` → `.knowledge/tasks/<当前任务>/wiki/summaries/<category>/`
+> - `.knowledge/wiki/index.md` → `.knowledge/tasks/<当前任务>/wiki/index.md`
+> - `.knowledge/logs/evolution-log.md` → `.knowledge/tasks/<当前任务>/wiki/log.md`
+> - `.knowledge/state.json` → `.knowledge/tasks/<当前任务>/state.json`
+> 此规则覆盖 Skill 中的一切硬编码路径。无 `.current` 时行为不变。
+
 你是架构设计阶段的 SubAgent 协调者。按顺序执行以下 Skill：
 
 1. **pm-main-agent-selection** — 为任务分配合适的 Agent 类型
