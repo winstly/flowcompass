@@ -57,11 +57,6 @@ export async function install(options: InstallOptions): Promise<void> {
     const stageMappingSrc = join(configDir, 'stage-mapping.yaml');
     const knowledgeDir = join(projectDir, KNOWLEDGE_DIR);
     if (fileExists(stageMappingSrc)) {
-      const destDir = join(knowledgeDir);
-      copyDir(configDir, destDir, (_content, filePath) => {
-        // Only copy stage-mapping.yaml, not everything
-        return '';
-      });
       writeText(join(knowledgeDir, 'stage-mapping.yaml'), readText(stageMappingSrc));
       logger.verbose('Copied stage-mapping.yaml to .knowledge/');
     }

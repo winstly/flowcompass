@@ -39,9 +39,10 @@ describe('install', () => {
     expect(existsSync(commandsDir)).toBe(true);
 
     const commands = readdirSync(commandsDir);
-    expect(commands.length).toBe(8);
+    expect(commands.length).toBe(9);
     expect(commands).toContain('investigation.md');
     expect(commands).toContain('retrospective.md');
+    expect(commands).toContain('task.md');
   });
 
   it('creates .claude/rules with flowcompass-rules.md', async () => {

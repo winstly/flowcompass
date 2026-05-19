@@ -44,6 +44,35 @@ handoff: wiki/summaries/closure/retro.md
 </Execution_Policy>
 
 <Steps>
+0. **任务上下文合并（如有活跃任务）**
+   - 检查 `.knowledge/tasks/.current` 是否存在且内容非空
+   - 不存在或为空 → 跳过此步骤，继续后续步骤（行为不变）
+   - 存在 → 执行以下合并流程：
+     a. **VCS 状态确认**
+        - 提示用户：请确认已拉取最新代码（`git pull` / `svn update`）
+        - 提示用户：请确认当前分支正确
+        - 等待用户确认后才继续
+     b. **合并 summaries**
+        - 读取 `.knowledge/tasks/<name>/wiki/summaries/` 下所有文件
+        - 将其复制至主 wiki `.knowledge/wiki/summaries/<name>/` 下（按任务名建子目录）
+        - 合并策略：
+          - 主 wiki 中不存在的文件 → 直接复制
+          - 主 wiki 中存在且内容相同的文件 → 跳过
+          - 主 wiki 中存在但内容不同的文件 → 保留主 wiki 版本，在 index.md 中注明冲突
+     c. **合并 index.md**
+        - 读取任务 `.knowledge/tasks/<name>/wiki/index.md` 中的所有条目
+        - 在主 wiki `.knowledge/wiki/index.md` 中添加 `### <task-name>` 分区标题
+        - 将任务条目追加至该分区下（路径前缀从 `summaries/` 调整为 `summaries/<name>/`）
+     d. **合并 evolution-log.md**
+        - 读取任务 `.knowledge/tasks/<name>/wiki/log.md` 的所有内容（跳过首行标题）
+        - 追加至主 wiki `.knowledge/logs/evolution-log.md` 末尾
+     e. **归档**
+        - 将 `.knowledge/tasks/<name>/` 整个目录移动至 `.knowledge/tasks/archive/YYYY-MM-DD-<name>/`
+        - 日期使用当前日期
+     f. **清除任务上下文**
+        - 删除 `.knowledge/tasks/.current` 文件
+        - 后续步骤（复盘、沉淀、Agent模型提炼）将正常写入主 wiki
+
 1. **归档所有项目资料**
    - 项目文档 → 归档目录
    - 代码 → 版本库标签
@@ -86,6 +115,8 @@ handoff: wiki/summaries/closure/retro.md
 <Tool_Usage>
 - 写入工具：Write / Edit
 - 产出路径：wiki/summaries/closure/retro.md, wiki/summaries/closure/lessons-learned.md, wiki/summaries/closure/agent-models.md
+- 任务合并时使用文件操作（Read + Write + 目录移动）
+- 合并前检查 .knowledge/tasks/.current 确定活跃任务名
 </Tool_Usage>
 
 <Examples>
@@ -116,6 +147,10 @@ Why bad: 归档不可检索等于没归档
 </Escalation_And_Stop_Conditions>
 
 <Final_Checklist>
+- [ ] 如果存在活跃任务，wiki/summaries/<task-name>/ 是否已合并至主 wiki？
+- [ ] 如果存在活跃任务，主 wiki/index.md 是否已添加任务分区条目？
+- [ ] 如果存在活跃任务，evolution-log.md 是否已追加任务日志？
+- [ ] 如果存在活跃任务，.knowledge/tasks/.current 是否已清除？
 - [ ] 所有项目资料是否都已归档？
 - [ ] 归档是否可检索可追溯？
 - [ ] 复盘是否有具体做法而非空泛总结？

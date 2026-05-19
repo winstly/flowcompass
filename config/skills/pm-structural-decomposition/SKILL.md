@@ -61,7 +61,9 @@ DELTA:  "更新", "同步变更"
 
 <Steps>
 1. **检查 Wiki 状态**
-   - 读取 `.knowledge/wiki/index.md` 判断是否存在
+   - 检查 `.knowledge/tasks/.current` 是否存在且内容非空
+     - 存在 → 读取 `.knowledge/tasks/<name>/wiki/index.md`（任务沙箱 wiki）
+     - 不存在 → 读取 `.knowledge/wiki/index.md`（主 wiki）
    - 不存在 → FULL 模式初始化
    - 存在但可能过时 → DELTA 模式增量更新
    - 用户指定模块 → SCOPE 模式定向分析

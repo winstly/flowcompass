@@ -59,3 +59,19 @@ flowcompass run <command> --force
 - 执行时在 `.knowledge/tasks/` 下创建任务文件
 - 用户手动完成任务后运行 `flowcompass next` 推进
 - 任务文件 pending 状态不会阻塞流水线，而是等待手动完成
+
+## 8. 任务隔离规则
+
+当 `.knowledge/tasks/.current` 存在且内容非空时，当前处于任务模式：
+
+- **写入路径重定向**：所有 `.knowledge/` 下的写入操作重定向至 `.knowledge/tasks/<当前任务>/` 下的对应位置
+  - `wiki/summaries/<category>/` → `tasks/<当前任务>/wiki/summaries/<category>/`
+  - `wiki/index.md` → `tasks/<当前任务>/wiki/index.md`
+  - `logs/evolution-log.md` → `tasks/<当前任务>/wiki/log.md`
+  - `state.json` → `tasks/<当前任务>/state.json`
+- **主 wiki 只读**：`.knowledge/wiki/` 仍可读取作为上下文参考，但不可写入
+- **任务合并**：`pm-project-closure-iteration` 执行时自动检测并合并任务 wiki 至主 wiki
+- **无任务时不变**：`.current` 不存在或为空时，所有行为与原始路径一致
+
+任务启动：`/flowcompass:task <task-name>`
+任务合并归档：通过 `/flowcompass:retrospective` 正常流程，`pm-project-closure-iteration` 会自动处理

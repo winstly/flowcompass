@@ -40,9 +40,9 @@ describe('command-resolver', () => {
     );
   });
 
-  it('lists all 8 commands', async () => {
+  it('lists all 9 commands', async () => {
     const commands = await listCommands(CONFIG_DIR);
-    expect(commands).toHaveLength(8);
+    expect(commands).toHaveLength(9);
     const names = commands.map((c) => c.name);
     expect(names).toContain('investigation');
     expect(names).toContain('retrospective');
